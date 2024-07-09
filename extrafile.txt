@@ -1,0 +1,243 @@
+const express = require('express')
+const app = express();
+const db = require('./db');
+/*function add(a,b){
+   // return a+b;
+//}
+// var add = function(a,b){
+   // return a+b;
+//}
+//var add = (a,b) => a+b;
+//var result = add(2,90);
+//console.log(result);
+//(function(){
+    //console.log('its me mansi');
+//})();
+
+//call back funcn works after completion of one task
+function callback(){
+    console.log('its you')
+}
+function add(a,b,callback){
+    console.log(a+b);
+    callback();
+}
+
+add(4,5, callback);*/
+
+
+
+
+
+
+
+/*const add= function(a,b, callback){
+    console.log(a+b);
+    callback();
+}
+
+add(2,3,()=>{
+    console.log('add done');
+});*/
+/*
+var fs= require('fs');
+var os= require('os');
+var user= os.userInfo();
+console.log(user);
+
+fs.appendFile('greeting.txt','hi' +user.username +'!\n', ()=>{
+    console.log('file is created');
+});
+console.log(os);//tells what os can do
+*/
+
+/*const notes= require ('./notes.js');
+ var age=notes.age;
+ console.log(age);
+ var add=notes.addNo(23,44);
+ console.log(add);*/
+
+ /*var _ = require('lodash');
+ var data=["person",1,2,1,1,3];
+ var filter=_.uniq(data);
+ console.log(filter);
+
+ console.log(_.isString(true));*/
+
+ /*const jsonString='{"name":"jon","age":20}';
+ const jsonObject= JSON.parse(jsonString);
+ console.log(jsonObject.name);
+
+ const objectToConvert = {
+    name:"alice",
+    age:20
+ };
+ const json = JSON.stringify(objectToConvert);
+ console.log(json);
+ console.log(typeof json);*/
+
+ 
+
+app.get('/', function (req, res) {//like a menu card
+  res.send('Hello World')
+})
+/*app.get('/chicken',(req,res)=>{
+    res.send('sure,we would lv to')
+})
+app.get('/idli', (req,res)=>{
+    var customized_idli = {
+        name: 'rava idli',
+        size: '10 cm',
+        is_sambhar: true,
+        is_chutney: false,
+    }
+    res.send('yay we have the most delicious one')
+})
+
+app.post('/items', (req,res)=>{
+    
+    res.send('data is saved');
+})*/
+app.listen(3002, () => {
+    console.log('server is listening');
+} )//port
+
+
+from Server.js
+const express = require('express')
+const app = express();
+const db = require('./db');
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+const Person = require('./models/person');
+
+app.get('/', function (req, res) {//like a menu card
+  res.send('Hello World')
+})
+
+app.post('/person', (req, res) =>{
+  /*const data = req.body
+  const newPerson = new Person(data);
+  //newPerson.name = data.name;
+  //newPerson.age = data.age;
+  //newPerson.mobile = data.mobile;
+  //newPerson.email = data.email;
+  //newPerson.address = data.address;
+  /*newPerson.save((error,savedPerson) =>{
+    if(error){
+      console.log('Error saving person:', error);
+      res.status(500).json({error: 'Internal server error'}) 
+    }else{
+      console.log('data saved successfully');
+      res.status(200).json(savedPerson);
+    }
+  })
+} )*/ //THIS CALL BACK FUNCN IS NOT USED NOW A DAYS
+})
+app.listen(3002, () => {
+    console.log('server is listening');
+} )//port
+
+
+
+
+
+
+
+
+const express = require('express')
+const app = express();
+const db = require('./db');
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+const Person = require('./models/person');
+const MenuItem = require('./models/MenuItem');
+
+app.get('/', function (req, res) {//like a menu card
+  res.send('Hello World')
+}) 
+app.post('/MenuItem', async(req, res)=>{
+  try{
+   const data = req.body
+   const newMenu = new MenuItem(data);
+     const response = await newMenu.save();
+     console.log('data saved');
+     res.status(200).json(response); 
+  }
+  catch(err){
+    console.log(err);
+    res.status(500).json({error: 'Internal server error'});
+
+  }
+})
+
+app.get('/MenuItem', async(req, res)=>{
+  try{
+    const data = await MenuItem.find();
+    console.log('data fetched');
+    res.status(200).json(data);
+}
+catch(err){
+console.log(err);
+res.status(500).json({error: 'Internal server error'});
+}
+})
+app.post('/person', async(req, res) =>{
+  try{ 
+    const data = req.body
+    const newPerson = new Person(data);
+      const response = await newPerson.save();
+      console.log('data saved');
+      res.status(200).json(response);
+    }
+
+  catch(err){
+       console.log(err);
+       res.status(500).json({error: 'Internal server error'});
+  }
+})
+//get method to get the person
+app.get('/person',async(req,res)=>{
+  try{
+        const data = await Person.find();
+        console.log('data fetched');
+        res.status(200).json(data);
+  }
+  catch(err){
+    console.log(err);
+    res.status(500).json({error: 'Internal server error'});
+  }
+})
+app.get('/person/:workType', async(req,res)=>{
+  try{
+  const workType = req.params.workType;//params for parameter
+  if(workType == 'chef' || workType == 'manager'|| workType =='waiter'){
+      const response = await Person.find({work: workType});
+      console.log('response fetched');
+  }else{
+   res.status(404).json({error: 'invalid work type'});
+  }
+}catch(err){
+  console.log(err);
+  res.status(500).json({error: 'Internal server error'});
+}
+})
+app.get('/MenuItem/:taste', async (req,res)=>{
+  try{
+  const taste = req.params.taste;// extract the work type form the url parameter
+   if(taste=='sour'|| taste=='sweet'|| taste=='bitter'){
+    const response= await MenuItem.find({taste: taste});
+    console.log('response fetched');
+    res.status(200).json(response);
+  }
+  else{
+    res.status(404).json({error:'invalid work type'})
+  }
+}catch(err){
+  console.log(err);
+  res.status(500).json({error:'internal server error'});
+}
+})
+app.listen(3002, () => {
+    console.log('server is listening');
+} )//port
