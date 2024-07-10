@@ -39,7 +39,7 @@ console.log(err);
 res.status(500).json({error: 'Internal server error'});
 }
 })
-/*app.post('/person', async(req, res) =>{
+app.post('/person', async(req, res) =>{
   try{ 
     const data = req.body
     const newPerson = new Person(data);
@@ -78,7 +78,7 @@ app.get('/person/:workType', async(req,res)=>{
   console.log(err);
   res.status(500).json({error: 'Internal server error'});
 }
-})*/
+})
 app.get('/MenuItem/:taste', async (req,res)=>{
   try{
   const taste = req.params.taste;// extract the work type form the url parameter

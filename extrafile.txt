@@ -251,3 +251,6 @@ PORT = 3000
 Mon= mongodb+srv://mann912899:Man91289@cluster0.qldww40.mongodb.net/
 MONGODB_URL_LOCAL = mongodb://localhost:27017/hotels
 MONGODB_URL = mongodb+srv://mannn:mansi28@cluster0.qldww40.mongodb.net/
+
+
+http://localhost:3002/person
