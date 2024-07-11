@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 10000;
 
 //const Person = require('./models/person');
 //const MenuItem = require('./models/MenuItem');
@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3002;
 app.get('/', function (req, res) {//like a menu card
   res.send('Hello World')
 }) 
-app.post('/MenuItem', async(req, res)=>{
+/*app.post('/MenuItem', async(req, res)=>{
   try{
    const data = req.body
    const newMenu = new MenuItem(data);
@@ -94,7 +94,7 @@ app.get('/MenuItem/:taste', async (req,res)=>{
   console.log(err);
   res.status(500).json({error:'internal server error'});
 }
-})
+})*/
 const menuRoutes = require('./routes/menuRoutes');
 const personRoutes = require('./routes/personRoutes');
 app.use('/person', personRoutes);
